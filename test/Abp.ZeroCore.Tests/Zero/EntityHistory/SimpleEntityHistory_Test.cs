@@ -79,7 +79,7 @@ namespace Abp.Zero.EntityHistory
                     entityHistoryStore.SaveAsync(callback.Arg<EntityChangeSet>()))
                 );
 
-            const int tenantId = 1;
+            Guid tenantId = Guid.Empty;
 
             UsingDbContext(tenantId, (context) =>
             {

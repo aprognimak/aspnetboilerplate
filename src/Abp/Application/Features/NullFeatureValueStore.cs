@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace Abp.Application.Features
 {
@@ -16,7 +17,7 @@ namespace Abp.Application.Features
         private static readonly NullFeatureValueStore SingletonInstance = new NullFeatureValueStore();
 
         /// <inheritdoc/>
-        public Task<string> GetValueOrNullAsync(int tenantId, Feature feature)
+        public Task<string> GetValueOrNullAsync(Guid tenantId, Feature feature)
         {
             return Task.FromResult((string) null);
         }

@@ -1,3 +1,4 @@
+using System;
 using Abp.Dependency;
 using Abp.Domain.Repositories;
 using Abp.Domain.Uow;
@@ -15,14 +16,14 @@ namespace Abp.Authorization.Users
         IEventHandler<EntityUpdatedEventData<AbpUserBase>>,
         ITransientDependency
     {
-        private readonly IRepository<UserAccount, long> _userAccountRepository;
+        private readonly IRepository<UserAccount, Guid> _userAccountRepository;
         private readonly IUnitOfWorkManager _unitOfWorkManager;
 
         /// <summary>
         /// Constructor
         /// </summary>
         public UserAccountSynchronizer(
-            IRepository<UserAccount, long> userAccountRepository,
+            IRepository<UserAccount, Guid> userAccountRepository,
             IUnitOfWorkManager unitOfWorkManager)
         {
             _userAccountRepository = userAccountRepository;

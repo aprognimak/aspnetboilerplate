@@ -1,8 +1,9 @@
-﻿using Abp.Application.Services;
+﻿using System;
+using Abp.Application.Services;
 
 namespace Abp.ZeroCore.SampleApp.Application.Users
 {
-    public interface IUserAppService : IAsyncCrudAppService<UserDto, long>
+    public interface IUserAppService : IAsyncCrudAppService<UserDto, Guid>
     {
         
     }

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Abp.Runtime.Session;
 
 namespace Abp.Application.Features
@@ -23,6 +24,6 @@ namespace Abp.Application.Features
         /// <param name="tenantId">Tenant's Id</param>
         /// <param name="name">Unique feature name</param>
         /// <returns>Feature's current value</returns>
-        Task<string> GetValueAsync(int tenantId, string name);
+        Task<string> GetValueAsync(Guid tenantId, string name);
     }
 }

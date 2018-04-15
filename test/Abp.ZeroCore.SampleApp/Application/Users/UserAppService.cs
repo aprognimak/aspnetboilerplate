@@ -1,12 +1,13 @@
+using System;
 using Abp.Application.Services;
 using Abp.Domain.Repositories;
 using Abp.ZeroCore.SampleApp.Core;
 
 namespace Abp.ZeroCore.SampleApp.Application.Users
 {
-    public class UserAppService : AsyncCrudAppService<User, UserDto, long>, IUserAppService
+    public class UserAppService : AsyncCrudAppService<User, UserDto, Guid>, IUserAppService
     {
-        public UserAppService(IRepository<User, long> repository) 
+        public UserAppService(IRepository<User> repository) 
             : base(repository)
         {
             

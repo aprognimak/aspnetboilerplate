@@ -45,7 +45,7 @@ namespace Abp.TestBase.SampleApplication.Tests.Domain.Entities.Caching
 
         public class MessageCache : EntityCache<Message, MessageCacheItem>, IMessageCache, ITransientDependency
         {
-            public MessageCache(ICacheManager cacheManager, IRepository<Message, int> repository)
+            public MessageCache(ICacheManager cacheManager, IRepository<Message> repository)
                 : base(cacheManager, repository)
             {
 

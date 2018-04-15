@@ -9,8 +9,8 @@ using Abp.Domain.Repositories;
 
 namespace Abp.WebApi.OData.Controllers
 {
-    public abstract class AbpODataEntityController<TEntity> : AbpODataEntityController<TEntity, int>
-        where TEntity : class, IEntity<int>
+    public abstract class AbpODataEntityController<TEntity> : AbpODataEntityController<TEntity, Guid>
+        where TEntity : class, IEntity<Guid>
     {
         protected AbpODataEntityController(IRepository<TEntity> repository)
             : base(repository)

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Abp.Dependency;
 using Abp.Runtime.Session;
 
@@ -44,7 +45,7 @@ namespace Abp.Application.Features
         }
 
         /// <inheritdoc/>
-        public async Task<string> GetValueAsync(int tenantId, string name)
+        public async Task<string> GetValueAsync(Guid tenantId, string name)
         {
             var feature = _featureManager.Get(name);
 

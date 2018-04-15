@@ -34,7 +34,7 @@ namespace Abp.Zero
             }
 
             //Seed initial data for default tenant
-            AbpSession.TenantId = 1;
+            AbpSession.TenantId = Guid.Empty;
             UsingDbContext(context =>
             {
                 NormalizeDbContext(context);
@@ -61,7 +61,7 @@ namespace Abp.Zero
                 });
         }
 
-        protected IDisposable UsingTenantId(int? tenantId)
+        protected IDisposable UsingTenantId(Guid? tenantId)
         {
             var previousTenantId = AbpSession.TenantId;
             AbpSession.TenantId = tenantId;
@@ -88,7 +88,7 @@ namespace Abp.Zero
             return UsingDbContextAsync(AbpSession.TenantId, func);
         }
 
-        protected void UsingDbContext(int? tenantId, Action<SampleAppDbContext> action)
+        protected void UsingDbContext(Guid? tenantId, Action<SampleAppDbContext> action)
         {
             using (UsingTenantId(tenantId))
             {
@@ -100,7 +100,7 @@ namespace Abp.Zero
             }
         }
 
-        protected async Task UsingDbContextAsync(int? tenantId, Func<SampleAppDbContext, Task> action)
+        protected async Task UsingDbContextAsync(Guid? tenantId, Func<SampleAppDbContext, Task> action)
         {
             using (UsingTenantId(tenantId))
             {
@@ -112,7 +112,7 @@ namespace Abp.Zero
             }
         }
 
-        protected T UsingDbContext<T>(int? tenantId, Func<SampleAppDbContext, T> func)
+        protected T UsingDbContext<T>(Guid? tenantId, Func<SampleAppDbContext, T> func)
         {
             T result;
 
@@ -128,7 +128,7 @@ namespace Abp.Zero
             return result;
         }
 
-        protected async Task<T> UsingDbContextAsync<T>(int? tenantId, Func<SampleAppDbContext, Task<T>> func)
+        protected async Task<T> UsingDbContextAsync<T>(Guid? tenantId, Func<SampleAppDbContext, Task<T>> func)
         {
             T result;
 

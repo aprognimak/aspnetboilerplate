@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Abp.Authorization;
 using Abp.ZeroCore.SampleApp.Core;
 using Shouldly;
@@ -31,7 +32,8 @@ namespace Abp.Zero.Users
         {
             Resolve<IMultiTenancyConfig>().IsEnabled = true;
 
-            var defaultTenantId = 1;
+            var defaultTenantId = Guid.Empty;
+
             var user = UsingDbContext(defaultTenantId, (context) =>
             {
                 return context.Users.Single(f => f.TenantId == defaultTenantId && f.UserName == AbpUserBase.AdminUserName);

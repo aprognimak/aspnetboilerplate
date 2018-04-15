@@ -61,26 +61,26 @@ namespace Abp.Authorization.Users
 
         public IQueryable<TUser> Users => UserRepository.GetAll();
 
-        public IRepository<TUser, long> UserRepository { get; }
+        public IRepository<TUser, Guid> UserRepository { get; }
 
         private readonly IRepository<TRole> _roleRepository;
-        private readonly IRepository<UserRole, long> _userRoleRepository;
+        private readonly IRepository<UserRole, Guid> _userRoleRepository;
         private readonly IAsyncQueryableExecuter _asyncQueryableExecuter;
-        private readonly IRepository<UserLogin, long> _userLoginRepository;
-        private readonly IRepository<UserClaim, long> _userClaimRepository;
-        private readonly IRepository<UserPermissionSetting, long> _userPermissionSettingRepository;
+        private readonly IRepository<UserLogin> _userLoginRepository;
+        private readonly IRepository<UserClaim> _userClaimRepository;
+        private readonly IRepository<UserPermissionSetting> _userPermissionSettingRepository;
 
         private readonly IUnitOfWorkManager _unitOfWorkManager;
 
         public AbpUserStore(
             IUnitOfWorkManager unitOfWorkManager,
-            IRepository<TUser, long> userRepository,
+            IRepository<TUser> userRepository,
             IRepository<TRole> roleRepository,
             IAsyncQueryableExecuter asyncQueryableExecuter, 
-            IRepository<UserRole, long> userRoleRepository, 
-            IRepository<UserLogin, long> userLoginRepository, 
-            IRepository<UserClaim, long> userClaimRepository, 
-            IRepository<UserPermissionSetting, long> userPermissionSettingRepository)
+            IRepository<UserRole> userRoleRepository, 
+            IRepository<UserLogin> userLoginRepository, 
+            IRepository<UserClaim> userClaimRepository, 
+            IRepository<UserPermissionSetting> userPermissionSettingRepository)
         {
             _unitOfWorkManager = unitOfWorkManager;
             UserRepository = userRepository;
@@ -279,7 +279,7 @@ namespace Abp.Authorization.Users
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            return UserRepository.FirstOrDefaultAsync(userId.To<long>());
+            return UserRepository.FirstOrDefaultAsync(userId.To<Guid>());
         }
 
         /// <summary>
@@ -1171,7 +1171,7 @@ namespace Abp.Authorization.Users
         /// <param name="userNameOrEmailAddress">User name or email address</param>
         /// <returns>User or null</returns>
         [UnitOfWork]
-        public virtual async Task<TUser> FindByNameOrEmailAsync(int? tenantId, string userNameOrEmailAddress)
+        public virtual async Task<TUser> FindByNameOrEmailAsync(Guid? tenantId, string userNameOrEmailAddress)
         {
             using (_unitOfWorkManager.Current.SetTenantId(tenantId))
             {
@@ -1205,7 +1205,7 @@ namespace Abp.Authorization.Users
         }
 
         [UnitOfWork]
-        public virtual Task<TUser> FindAsync(int? tenantId, UserLoginInfo login)
+        public virtual Task<TUser> FindAsync(Guid? tenantId, UserLoginInfo login)
         {
             using (_unitOfWorkManager.Current.SetTenantId(tenantId))
             {
@@ -1218,7 +1218,7 @@ namespace Abp.Authorization.Users
             }
         }
 
-        public async Task<string> GetUserNameFromDatabaseAsync(long userId)
+        public async Task<string> GetUserNameFromDatabaseAsync(Guid userId)
         {
             //note: This workaround will not be needed after fixing https://github.com/aspnetboilerplate/aspnetboilerplate/issues/1828
             var outerUow = _unitOfWorkManager.Current;
@@ -1266,14 +1266,14 @@ namespace Abp.Authorization.Users
             );
         }
 
-        public virtual async Task<IList<PermissionGrantInfo>> GetPermissionsAsync(long userId)
+        public virtual async Task<IList<PermissionGrantInfo>> GetPermissionsAsync(Guid userId)
         {
             return (await _userPermissionSettingRepository.GetAllListAsync(p => p.UserId == userId))
                 .Select(p => new PermissionGrantInfo(p.Name, p.IsGranted))
                 .ToList();
         }
 
-        public virtual async Task<bool> HasPermissionAsync(long userId, PermissionGrantInfo permissionGrant)
+        public virtual async Task<bool> HasPermissionAsync(Guid userId, PermissionGrantInfo permissionGrant)
         {
             return await _userPermissionSettingRepository.FirstOrDefaultAsync(
                        p => p.UserId == userId &&

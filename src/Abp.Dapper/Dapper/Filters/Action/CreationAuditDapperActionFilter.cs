@@ -19,7 +19,7 @@ namespace Abp.Dapper.Filters.Action
 
         public void ExecuteFilter<TEntity, TPrimaryKey>(TEntity entity) where TEntity : class, IEntity<TPrimaryKey>
         {
-            long? userId = GetAuditUserId();
+            Guid? userId = GetAuditUserId();
             CheckAndSetId(entity);
             var entityWithCreationTime = entity as IHasCreationTime;
             if (entityWithCreationTime == null)
@@ -79,12 +79,12 @@ namespace Abp.Dapper.Filters.Action
             var entity = entityAsObj.As<IMustHaveTenant>();
 
             //Don't set if it's already set
-            if (entity.TenantId != 0)
+            if (entity.TenantId != Guid.Empty)
             {
                 return;
             }
 
-            int? currentTenantId = GetCurrentTenantIdOrNull();
+            var currentTenantId = GetCurrentTenantIdOrNull();
 
             if (currentTenantId != null)
             {

@@ -1,3 +1,4 @@
+using System;
 using Abp.Dependency;
 using Abp.Extensions;
 using Abp.MultiTenancy;
@@ -14,7 +15,7 @@ namespace Abp.AspNetCore.MultiTenancy
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public int? ResolveTenantId()
+        public Guid? ResolveTenantId()
         {
             var httpContext = _httpContextAccessor.HttpContext;
             if (httpContext == null)
@@ -28,8 +29,8 @@ namespace Abp.AspNetCore.MultiTenancy
                 return null;
             }
 
-            int tenantId;
-            return !int.TryParse(tenantIdValue, out tenantId) ? (int?) null : tenantId;
+            Guid tenantId;
+            return !Guid.TryParse(tenantIdValue, out tenantId) ? (Guid?) null : tenantId;
         }
     }
 }

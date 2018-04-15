@@ -4,10 +4,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Abp.Domain.Entities.Auditing
 {
     /// <summary>
-    /// A shortcut of <see cref="AuditedEntity{TPrimaryKey}"/> for most used primary key type (<see cref="int"/>).
+    /// A shortcut of <see cref="AuditedEntity{TPrimaryKey}"/> for most used primary key type (<see cref="Guid"/>).
     /// </summary>
     [Serializable]
-    public abstract class AuditedEntity : AuditedEntity<int>, IEntity
+    public abstract class AuditedEntity : AuditedEntity<Guid>, IEntity
     {
 
     }
@@ -27,7 +27,7 @@ namespace Abp.Domain.Entities.Auditing
         /// <summary>
         /// Last modifier user of this entity.
         /// </summary>
-        public virtual long? LastModifierUserId { get; set; }
+        public virtual Guid? LastModifierUserId { get; set; }
     }
 
     /// <summary>
@@ -37,7 +37,7 @@ namespace Abp.Domain.Entities.Auditing
     /// <typeparam name="TUser">Type of the user</typeparam>
     [Serializable]
     public abstract class AuditedEntity<TPrimaryKey, TUser> : AuditedEntity<TPrimaryKey>, IAudited<TUser>
-        where TUser : IEntity<long>
+        where TUser : IEntity<Guid>
     {
         /// <summary>
         /// Reference to the creator user of this entity.

@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using System;
+using System.Web;
 using Abp.Dependency;
 using Abp.Extensions;
 using Abp.MultiTenancy;
@@ -15,7 +16,7 @@ namespace Abp.Web.MultiTenancy
             Logger = NullLogger.Instance;
         }
 
-        public int? ResolveTenantId()
+        public Guid? ResolveTenantId()
         {
             var httpContext = HttpContext.Current;
             if (httpContext == null)
@@ -29,8 +30,8 @@ namespace Abp.Web.MultiTenancy
                 return null;
             }
 
-            int tenantId;
-            return !int.TryParse(tenantIdHeader, out tenantId) ? (int?) null : tenantId;
+            Guid tenantId;
+            return !Guid.TryParse(tenantIdHeader, out tenantId) ? (Guid?) null : tenantId;
         }
     }
 }

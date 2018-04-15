@@ -1,3 +1,4 @@
+using System;
 using System.Web;
 using Abp.Dependency;
 using Abp.Extensions;
@@ -7,7 +8,7 @@ namespace Abp.Web.MultiTenancy
 {
     public class HttpCookieTenantResolveContributor : ITenantResolveContributor, ITransientDependency
     {
-        public int? ResolveTenantId()
+        public Guid? ResolveTenantId()
         {
             var cookie = HttpContext.Current?.Request.Cookies[MultiTenancyConsts.TenantIdResolveKey];
             if (cookie == null || cookie.Value.IsNullOrEmpty())
@@ -15,8 +16,8 @@ namespace Abp.Web.MultiTenancy
                 return null;
             }
 
-            int tenantId;
-            return !int.TryParse(cookie.Value, out tenantId) ? (int?) null : tenantId;
+            Guid tenantId;
+            return !Guid.TryParse(cookie.Value, out tenantId) ? (Guid?) null : tenantId;
         }
     }
 }

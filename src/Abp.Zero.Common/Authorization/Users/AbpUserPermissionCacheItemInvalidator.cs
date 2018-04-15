@@ -1,3 +1,4 @@
+using System;
 using Abp.Dependency;
 using Abp.Events.Bus.Entities;
 using Abp.Events.Bus.Handlers;
@@ -21,19 +22,19 @@ namespace Abp.Authorization.Users
 
         public void HandleEvent(EntityChangedEventData<UserPermissionSetting> eventData)
         {
-            var cacheKey = eventData.Entity.UserId + "@" + (eventData.Entity.TenantId ?? 0);
+            var cacheKey = eventData.Entity.UserId + "@" + (eventData.Entity.TenantId ?? Guid.Empty);
             _cacheManager.GetUserPermissionCache().Remove(cacheKey);
         }
 
         public void HandleEvent(EntityChangedEventData<UserRole> eventData)
         {
-            var cacheKey = eventData.Entity.UserId + "@" + (eventData.Entity.TenantId ?? 0);
+            var cacheKey = eventData.Entity.UserId + "@" + (eventData.Entity.TenantId ?? Guid.Empty);
             _cacheManager.GetUserPermissionCache().Remove(cacheKey);
         }
 
         public void HandleEvent(EntityDeletedEventData<AbpUserBase> eventData)
         {
-            var cacheKey = eventData.Entity.Id + "@" + (eventData.Entity.TenantId ?? 0);
+            var cacheKey = eventData.Entity.Id + "@" + (eventData.Entity.TenantId ?? Guid.Empty);
             _cacheManager.GetUserPermissionCache().Remove(cacheKey);
         }
     }

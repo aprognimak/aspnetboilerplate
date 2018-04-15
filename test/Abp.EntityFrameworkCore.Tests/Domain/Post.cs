@@ -16,7 +16,7 @@ namespace Abp.EntityFrameworkCore.Tests.Domain
 
         public bool IsDeleted { get; set; }
 
-        public int? TenantId { get; set; }
+        public Guid? TenantId { get; set; }
 
         public Post()
         {

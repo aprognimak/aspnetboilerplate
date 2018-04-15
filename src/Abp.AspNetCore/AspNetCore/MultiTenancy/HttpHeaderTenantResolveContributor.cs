@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Abp.Collections.Extensions;
 using Abp.Dependency;
 using Abp.MultiTenancy;
@@ -20,7 +21,7 @@ namespace Abp.AspNetCore.MultiTenancy
             Logger = NullLogger.Instance;
         }
 
-        public int? ResolveTenantId()
+        public Guid? ResolveTenantId()
         {
             var httpContext = _httpContextAccessor.HttpContext;
             if (httpContext == null)
@@ -41,8 +42,8 @@ namespace Abp.AspNetCore.MultiTenancy
                     );
             }
 
-            int tenantId;
-            return !int.TryParse(tenantIdHeader.First(), out tenantId) ? (int?) null : tenantId;
+            Guid tenantId;
+            return !Guid.TryParse(tenantIdHeader.First(), out tenantId) ? (Guid?) null : tenantId;
         }
     }
 }

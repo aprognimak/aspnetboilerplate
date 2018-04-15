@@ -21,6 +21,11 @@ namespace Abp.Dapper.Tests
         private readonly IRepository<ProductDetail> _productDetailRepository;
         private readonly IDapperRepository<ProductDetail> _productDetailDapperRepository;
 
+        private Guid Tenant1 = Guid.NewGuid();
+        private Guid Tenant2 = Guid.NewGuid();
+        private Guid Tenant3 = Guid.NewGuid();
+        private Guid User1 = Guid.NewGuid();
+
         public DapperRepository_Tests()
         {
             _productDapperRepository = Resolve<IDapperRepository<Product>>();
@@ -99,28 +104,28 @@ namespace Abp.Dapper.Tests
                     softDeletedProductFromDapperWhenFilterDisabled.ShouldNotBeNull();
                 }
 
-                using (AbpSession.Use(2, 266))
+                using (AbpSession.Use(Tenant2, User1))
                 {
-                    int productWithTenant2Id = _productDapperRepository.InsertAndGetId(new Product("ProductWithTenant2"));
+                    Guid productWithTenant2Id = _productDapperRepository.InsertAndGetId(new Product("ProductWithTenant2"));
 
                     Product productWithTenant2 = _productRepository.Get(productWithTenant2Id);
 
-                    productWithTenant2.TenantId.ShouldBe(1); //Not sure about that?,Because we changed TenantId to 2 in this scope !!! Abp.TenantId = 2 now NOT 1 !!!
+                    productWithTenant2.TenantId.ShouldBe(Tenant2); //Not sure about that?,Because we changed TenantId to 2 in this scope !!! Abp.TenantId = 2 now NOT 1 !!!
                 }
 
-                using (_unitOfWorkManager.Current.SetTenantId(3))
+                using (_unitOfWorkManager.Current.SetTenantId(Tenant3))
                 {
-                    int productWithTenant3Id = _productDapperRepository.InsertAndGetId(new Product("ProductWithTenant3"));
+                    Guid productWithTenant3Id = _productDapperRepository.InsertAndGetId(new Product("ProductWithTenant3"));
 
                     Product productWithTenant3 = _productRepository.Get(productWithTenant3Id);
 
-                    productWithTenant3.TenantId.ShouldBe(3);
+                    productWithTenant3.TenantId.ShouldBe(Tenant3);
                 }
 
                 Product productWithTenantId3FromDapper = _productDapperRepository.FirstOrDefault(x => x.Name == "ProductWithTenant3");
                 productWithTenantId3FromDapper.ShouldBeNull();
 
-                using (_unitOfWorkManager.Current.SetTenantId(3))
+                using (_unitOfWorkManager.Current.SetTenantId(Tenant3))
                 {
                     Product productWithTenantId3FromDapperInsideTenantScope = _productDapperRepository.FirstOrDefault(x => x.Name == "ProductWithTenant3");
                     productWithTenantId3FromDapperInsideTenantScope.ShouldNotBeNull();
@@ -129,7 +134,7 @@ namespace Abp.Dapper.Tests
                 //About issue-#2091
                 using (_unitOfWorkManager.Current.SetTenantId(AbpSession.TenantId))
                 {
-                    int productWithTenantId40 = _productDapperRepository.InsertAndGetId(new Product("ProductWithTenantId40"));
+                    Guid productWithTenantId40 = _productDapperRepository.InsertAndGetId(new Product("ProductWithTenantId40"));
 
                     Product productWithTenant40 = _productRepository.Get(productWithTenantId40);
 
@@ -139,7 +144,7 @@ namespace Abp.Dapper.Tests
 
 
                 //Second DbContext tests
-                int productDetailId =_productDetailRepository.InsertAndGetId(new ProductDetail("Woman"));
+                Guid productDetailId =_productDetailRepository.InsertAndGetId(new ProductDetail("Woman"));
                 _productDetailDapperRepository.Get(productDetailId).ShouldNotBeNull();
 
 

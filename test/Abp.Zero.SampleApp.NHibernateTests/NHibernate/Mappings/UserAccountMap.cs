@@ -1,9 +1,10 @@
-﻿using Abp.Authorization.Users;
+﻿using System;
+using Abp.Authorization.Users;
 using Abp.NHibernate.EntityMappings;
 
 namespace Abp.Zero.SampleApp.NHibernate.Mappings
 {
-    public class UserAccountMap : EntityMap<UserAccount, long>
+    public class UserAccountMap : EntityMap<UserAccount, Guid>
     {
         /// <summary>
         /// Constructor

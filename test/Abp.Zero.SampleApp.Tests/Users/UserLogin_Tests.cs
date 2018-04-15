@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Abp.Authorization;
 using Abp.Authorization.Users;
@@ -16,6 +17,8 @@ namespace Abp.Zero.SampleApp.Tests.Users
     public class UserLogin_Tests : SampleAppTestBase
     {
         private readonly AppLogInManager _logInManager;
+        private Guid Tenant1 = Guid.NewGuid();
+        private Guid User1 = Guid.NewGuid();
 
         public UserLogin_Tests()
         {
@@ -27,7 +30,7 @@ namespace Abp.Zero.SampleApp.Tests.Users
         public async Task Should_Login_With_Correct_Values_Without_MultiTenancy()
         {
             Resolve<IMultiTenancyConfig>().IsEnabled = false;
-            AbpSession.TenantId = 1;
+            AbpSession.TenantId = Tenant1;
 
             var loginResult = await _logInManager.LoginAsync("user1", "123qwe");
             loginResult.Result.ShouldBe(AbpLoginResultType.Success);
@@ -70,7 +73,7 @@ namespace Abp.Zero.SampleApp.Tests.Users
         public async Task Should_Login_With_Correct_Values_With_MultiTenancy()
         {
             Resolve<IMultiTenancyConfig>().IsEnabled = true;
-            AbpSession.TenantId = 1;
+            AbpSession.TenantId = Tenant1;
 
             var loginResult = await _logInManager.LoginAsync("user1", "123qwe", Tenant.DefaultTenantName);
             loginResult.Result.ShouldBe(AbpLoginResultType.Success);
@@ -84,8 +87,8 @@ namespace Abp.Zero.SampleApp.Tests.Users
             Resolve<IMultiTenancyConfig>().IsEnabled = true;
 
             //Set session
-            AbpSession.TenantId = 1;
-            AbpSession.UserId = 1;
+            AbpSession.TenantId = Tenant1;
+            AbpSession.UserId = User1;
 
             //Email confirmation is disabled as default
             (await _logInManager.LoginAsync("user1", "123qwe", Tenant.DefaultTenantName)).Result.ShouldBe(AbpLoginResultType.Success);

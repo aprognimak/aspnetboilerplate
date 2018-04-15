@@ -1,4 +1,5 @@
-﻿using Abp.Authorization.Users;
+﻿using System;
+using Abp.Authorization.Users;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.DataProtection;
 
@@ -13,7 +14,7 @@ namespace Abp.Zero.AspNetCore
             _dataProtectionProvider = dataProtectionProvider;
         }
 
-        public IUserTokenProvider<TUser, long> GetUserTokenProviderOrNull<TUser>()
+        public IUserTokenProvider<TUser, Guid> GetUserTokenProviderOrNull<TUser>()
             where TUser : AbpUser<TUser>
         {
             return new DataProtectorUserTokenProvider<TUser>(_dataProtectionProvider.CreateProtector("ASP.NET Identity"));

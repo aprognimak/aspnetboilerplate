@@ -12,12 +12,12 @@ namespace Abp.Zero.SampleApp.Users
 {
     public class UserAppService : IUserAppService
     {
-        private readonly IRepository<User, long> _userRepository;
+        private readonly IRepository<User> _userRepository;
         private readonly IUnitOfWorkManager _unitOfWorkManager;
         private readonly UserManager _userManager;
 
         public UserAppService(
-            IRepository<User, long> userRepository,
+            IRepository<User> userRepository,
             IUnitOfWorkManager unitOfWorkManager,
             UserManager userManager)
         {
@@ -56,7 +56,7 @@ namespace Abp.Zero.SampleApp.Users
             _userRepository.Update(user);
         }
 
-        public void DeleteUser(long userId)
+        public void DeleteUser(Guid userId)
         {
             _userRepository.Delete(userId);
         }
