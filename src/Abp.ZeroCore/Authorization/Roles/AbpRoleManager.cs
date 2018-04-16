@@ -129,7 +129,7 @@ namespace Abp.Authorization.Roles
         /// </summary>
         /// <param name="roleId">Role id</param>
         /// <returns>List of granted permissions</returns>
-        public virtual async Task<IReadOnlyList<Permission>> GetGrantedPermissionsAsync(int roleId)
+        public virtual async Task<IReadOnlyList<Permission>> GetGrantedPermissionsAsync(Guid roleId)
         {
             return await GetGrantedPermissionsAsync(await GetRoleByIdAsync(roleId));
         }
@@ -170,7 +170,7 @@ namespace Abp.Authorization.Roles
         /// </summary>
         /// <param name="roleId">Role id</param>
         /// <param name="permissions">Permissions</param>
-        public virtual async Task SetGrantedPermissionsAsync(int roleId, IEnumerable<Permission> permissions)
+        public virtual async Task SetGrantedPermissionsAsync(Guid roleId, IEnumerable<Permission> permissions)
         {
             await SetGrantedPermissionsAsync(await GetRoleByIdAsync(roleId), permissions);
         }
@@ -303,7 +303,7 @@ namespace Abp.Authorization.Roles
         /// <param name="roleId">Role id</param>
         /// <returns>Role</returns>
         /// <exception cref="AbpException">Throws exception if no role with given id</exception>
-        public virtual async Task<TRole> GetRoleByIdAsync(int roleId)
+        public virtual async Task<TRole> GetRoleByIdAsync(Guid roleId)
         {
             var role = await FindByIdAsync(roleId.ToString());
             if (role == null)

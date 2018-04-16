@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -13,25 +14,25 @@ namespace Abp.BackgroundJobs
     /// </summary>
     public class InMemoryBackgroundJobStore : IBackgroundJobStore
     {
-        private readonly Dictionary<long, BackgroundJobInfo> _jobs;
-        private long _lastId;
+        private readonly Dictionary<Guid, BackgroundJobInfo> _jobs;
+        private Guid _lastId;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InMemoryBackgroundJobStore"/> class.
         /// </summary>
         public InMemoryBackgroundJobStore()
         {
-            _jobs = new Dictionary<long, BackgroundJobInfo>();
+            _jobs = new Dictionary<Guid, BackgroundJobInfo>();
         }
 
-        public Task<BackgroundJobInfo> GetAsync(long jobId)
+        public Task<BackgroundJobInfo> GetAsync(Guid jobId)
         {
             return Task.FromResult(_jobs[jobId]);
         }
 
         public Task InsertAsync(BackgroundJobInfo jobInfo)
         {
-            jobInfo.Id = Interlocked.Increment(ref _lastId);
+            jobInfo.Id = Guid.NewGuid();
             _jobs[jobInfo.Id] = jobInfo;
 
             return Task.FromResult(0);

@@ -12,7 +12,7 @@ namespace Abp.BackgroundJobs
     /// </summary>
     [Table("AbpBackgroundJobs")]
     [MultiTenancySide(MultiTenancySides.Host)]
-    public class BackgroundJobInfo : CreationAuditedEntity<long>
+    public class BackgroundJobInfo : CreationAuditedEntity<Guid>
     {
         /// <summary>
         /// Maximum length of <see cref="JobType"/>.

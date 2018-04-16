@@ -5,6 +5,7 @@ using Abp.Authorization.Users;
 using Abp.EntityFrameworkCore.Extensions;
 using Abp.Events.Bus;
 using Abp.Events.Bus.Entities;
+using Abp.MultiTenancy;
 using Abp.Runtime.Session;
 using Abp.TestBase;
 using Abp.Zero.TestData;
@@ -38,7 +39,7 @@ namespace Abp.Zero
             UsingDbContext(context =>
             {
                 NormalizeDbContext(context);
-                new TestDataBuilder(context, 1).Create();
+                new TestDataBuilder(context, MultiTenancyConsts.DefaultTenantId).Create();
             });
         }
 
