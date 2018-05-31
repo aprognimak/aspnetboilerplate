@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <Version>9.9.5</Version>
+    <Version>9.9.6</Version>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
     <PackageIconUrl>http://www.aspnetboilerplate.com/images/abp_nupkg.png</PackageIconUrl>
     <PackageProjectUrl>http://www.aspnetboilerplate.com/</PackageProjectUrl>
