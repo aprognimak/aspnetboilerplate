@@ -212,8 +212,8 @@ namespace Abp.EntityHistory
                 {
                     propertyChanges.Add(new EntityPropertyChange
                     {
-                        NewValue = isDeleted ? null : propertyEntry.CurrentValue.ToJsonString().TruncateWithPostfix(EntityPropertyChange.MaxValueLength),
-                        OriginalValue = isCreated ? null : propertyEntry.OriginalValue.ToJsonString().TruncateWithPostfix(EntityPropertyChange.MaxValueLength),
+                        NewValue = isDeleted ? null : propertyEntry.CurrentValue.ToJsonString(),
+                        OriginalValue = isCreated ? null : propertyEntry.OriginalValue.ToJsonString(),
                         PropertyName = property.Name,
                         PropertyTypeFullName = property.ClrType.FullName,
                         TenantId = AbpSession.TenantId
@@ -375,7 +375,7 @@ namespace Abp.EntityHistory
                             else
                             {
                                 // Update foreign key
-                                propertyChange.NewValue = newValue.TruncateWithPostfix(EntityPropertyChange.MaxValueLength);
+                                propertyChange.NewValue = newValue;
                             }
                         }
                     }

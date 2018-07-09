@@ -18,7 +18,7 @@ namespace Abp.EntityHistory
         /// Maximum length of <see cref="NewValue"/> and <see cref="OriginalValue"/> properties.
         /// Value: 512.
         /// </summary>
-        public const int MaxValueLength = 512;
+        //public const int MaxValueLength = 512;
 
         /// <summary>
         /// Maximum length of <see cref="PropertyTypeFullName"/> property.
@@ -34,13 +34,13 @@ namespace Abp.EntityHistory
         /// <summary>
         /// NewValue.
         /// </summary>
-        [MaxLength(MaxValueLength)]
+        //[MaxLength(MaxValueLength)]
         public virtual string NewValue { get; set; }
 
         /// <summary>
         /// OriginalValue.
         /// </summary>
-        [MaxLength(MaxValueLength)]
+        //[MaxLength(MaxValueLength)]
         public virtual string OriginalValue { get; set; }
 
         /// <summary>
