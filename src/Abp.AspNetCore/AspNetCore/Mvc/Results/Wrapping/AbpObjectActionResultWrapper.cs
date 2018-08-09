@@ -30,15 +30,15 @@ namespace Abp.AspNetCore.Mvc.Results.Wrapping
             if (!(objectResult.Value is AjaxResponseBase))
             {
                 objectResult.Value = new AjaxResponse(objectResult.Value);
-                if (!objectResult.Formatters.Any(f => f is JsonOutputFormatter))
-                {
-                    objectResult.Formatters.Add(
-                        new JsonOutputFormatter(
-                            _serviceProvider.GetRequiredService<IOptions<MvcJsonOptions>>().Value.SerializerSettings,
-                            _serviceProvider.GetRequiredService<ArrayPool<char>>()
-                        )
-                    );
-                }
+                //if (!objectResult.Formatters.Any(f => f is JsonOutputFormatter))
+                //{
+                //    objectResult.Formatters.Add(
+                //        new JsonOutputFormatter(
+                //            _serviceProvider.GetRequiredService<IOptions<MvcJsonOptions>>().Value.SerializerSettings,
+                //            _serviceProvider.GetRequiredService<ArrayPool<char>>()
+                //        )
+                //    );
+                //}
             }
         }
     }
